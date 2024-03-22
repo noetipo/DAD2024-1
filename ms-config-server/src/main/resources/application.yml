@@ -8,7 +8,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/noetipo/asistencia-microservicios.git # ruta del repositorio git
+          uri: https://github.com/noetipo/DAD2024-1.git # ruta del repositorio git
           searchPaths: config-data
           #username:
           #password:
