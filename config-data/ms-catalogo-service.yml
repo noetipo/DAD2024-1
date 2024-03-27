@@ -23,5 +23,3 @@ eureka:
       defaultZone: ${EUREKA_URI:http://ms-registryserver:8090/eureka}
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-  instance:
-    hostname: localhost
