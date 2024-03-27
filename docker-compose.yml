@@ -1,0 +1,66 @@
+version: '3.4'
+########################################################## base de datos catalogo  #############################################################################
+  
+services:
+  mysql-asistencia:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    networks:
+      - backend
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=ms_catalogo
+    ports:
+      - 3306:3306
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4g
+    volumes:
+      - db_data:/var/lib/mysql
+
+  ms-configserver:
+    build:
+      context: ./ms-config-server
+      dockerfile: Dockerfile
+    container_name: ms-config-server
+    ports:
+      - "7070:7070"
+    environment:
+      - OTEL_SERVICE_NAME=ms-config-server
+    networks:
+      - backend
+########################################################## ms-registryserver #############################################################################
+  
+
+  ms-registryserver:
+    build:
+      context: ./ms-registry-server
+      dockerfile: Dockerfile
+    container_name: ms-registry-server
+    ports:
+      - "8090:8090"
+    environment:
+      - OTEL_SERVICE_NAME=ms-registry-server
+    networks:
+      - backend
+########################################################## ms-catalogo #############################################################################
+  
+
+  ms-catalogo:
+    build:
+      context: ./ms-catalogo
+      dockerfile: Dockerfile
+    container_name: ms-catalogo
+    ports:
+      - "8081:8081"
+    environment:
+      - OTEL_SERVICE_NAME=ms-catalogo
+    networks:
+      - backend
+
+networks:
+  backend:
+    name: backend
+    driver: bridge
