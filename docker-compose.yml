@@ -2,7 +2,7 @@ version: '3.4'
 ########################################################## base de datos catalogo  #############################################################################
   
 services:
-  mysql-asistencia:
+  mysql-catalogo:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     networks:
@@ -19,7 +19,7 @@ services:
           memory: 4g
     volumes:
       - db_data:/var/lib/mysql
-
+########################################################## config server #############################################################################
   ms-configserver:
     build:
       context: ./ms-config-server
@@ -64,3 +64,6 @@ networks:
   backend:
     name: backend
     driver: bridge
+
+volumes:
+  db_data:
