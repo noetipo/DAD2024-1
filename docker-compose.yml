@@ -7,6 +7,7 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     networks:
       - backend
+  
     environment:
       - MYSQL_ROOT_PASSWORD=123456
       - MYSQL_DATABASE=ms_catalogo
@@ -45,6 +46,8 @@ services:
       - OTEL_SERVICE_NAME=ms-registry-server
     networks:
       - backend
+    depends_on:
+      - ms-configserver
 ########################################################## ms-catalogo #############################################################################
   
 
@@ -59,6 +62,9 @@ services:
       - OTEL_SERVICE_NAME=ms-catalogo
     networks:
       - backend
+    depends_on:
+      - ms-configserver
+      - mysql-catalogo
 
 networks:
   backend:
